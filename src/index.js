@@ -1,3 +1,14 @@
 ﻿// plik inicjalizacyjny aplikacji
+import WeatherAPI from './weatherSource/WeatherSource'
 
 console.log("...");
+
+WeatherAPI.getWeather('London','England')
+    .then((res) => {
+        console.log(res)
+    })
+    .catch((e) => {
+        console.log('This is an error!')
+        console.log(e);
+    })
+
