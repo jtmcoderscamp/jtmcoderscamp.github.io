@@ -19,12 +19,12 @@ export default class IpBasedLocationSource{
     }
 
     async checkLocation(){
-        console.log(this._apiUrl);
         let response = await fetch(this._apiUrl);
+        if(!response.ok){
+            throw response.status+" "+response.statusText;
+        }
         let jsonResponse = await response.json();
-        console.log(jsonResponse);
         let coordinates = [];
-        console.log(this._coordinatesFieldMode);
         if(this._coordinatesFieldMode==="singleField"){
             let location = resolvePath(jsonResponse, this._locationFieldPath);
             coordinates = location.split(this._locationFieldSeparator);
