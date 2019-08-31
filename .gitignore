@@ -1,7 +1,8 @@
 node_modules/
 dist/bundle.js
-.vs/slnx.sqlite
 
-.vs/VSWorkspaceState.json
-
-.vscode/launch.json
+.vs/*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
