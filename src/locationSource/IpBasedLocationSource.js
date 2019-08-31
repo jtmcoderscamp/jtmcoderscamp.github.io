@@ -1,6 +1,13 @@
 const resolvePath = require("object-resolve-path");
 
 export default class IpBasedLocationSource{
+    /**
+     * The constructor defining the API this object connect to for coordinates.
+     * @param {String} apiUrl url of API to be queried for location, along with any necessary path variables
+     * @param {String} latitudeFieldPath path to the latitude field in JSON answer (if the aswer is {position:{lat: 0, lon: 0}}), the path would be position.lat)
+     * @param {String} longitudeFieldPath path to the longitude field in JSON answer (if the aswer is {position:{lat: 0, lon: 0}}), the path would be position.lon)
+     * @param {String} locationFieldSeparator the separator to be used to split the latitude and longitude if they come as the same field (for example: {coordinates: "0.0, 10.11"} would require a ", " separator) 
+     */
     constructor(apiUrl = "https://json.geoiplookup.io/", latitudeFieldPath = "latitude", longitudeFieldPath = "longitude", locationFieldSeparator = null){
         this._apiUrl = apiUrl;
         if(latitudeFieldPath===longitudeFieldPath && typeof latitudeFieldPath === "string" && locationFieldSeparator){
@@ -18,6 +25,10 @@ export default class IpBasedLocationSource{
         }
     }
 
+    /** 
+     * The main function querying the API based on configuration provided in constructor
+     * @returns coordinates in {latitude, longitude} format
+    */
     async checkLocation(){
         let response = {};
         try{
@@ -31,7 +42,6 @@ export default class IpBasedLocationSource{
         }
 
         let jsonResponse = await response.json();
-
         let coordinates = {};
 
         if(this._coordinatesFieldMode==="singleField"){
