@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Wesoła Pogoda</title>
-		<script src="./bundle.js" async></script>
-	</head>
-	<body>
-		<div id="root"></div>
-	</body>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Wesoła Pogoda</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Chilanka|Itim&display=swap" rel="stylesheet">
+	<script src="./bundle.js" async></script>
+</head>
+
+<body>
+	<img class="city" src="icons/city.jpg" alt="city">
+	<!-- <div id="root"></div> -->
+	<div class="search-box">
+		<input class="search-txt" type="text" name="" placeholder="Type to search">
+		<a class="search-btn" href="#">
+			<img class="search-icon" src="icons/search.svg" alt="search-button">
+		</a>
+	</div>
+	<div>
+		<img class="bunny" src="icons/bunny.svg" alt="bunny">
+		<h1><span>Hi, I'm a weather bunny! </span><br> Please select your location <br> to find out how is the <br>
+			weather at
+			your
+			place
+			today.
+		</h1>
+	</div>
+</body>
+
 </html>
