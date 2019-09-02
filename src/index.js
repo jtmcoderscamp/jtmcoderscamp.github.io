@@ -1,5 +1,6 @@
-﻿// plik inicjalizacyjny aplikacji
-import WeatherAPI from './weatherSource/WeatherSource'
+﻿import GpsApiLocationSource from "./locationSource/GpsApiLocationSource";
+
+// plik inicjalizacyjny aplikacji
 
 console.log("...");
 
