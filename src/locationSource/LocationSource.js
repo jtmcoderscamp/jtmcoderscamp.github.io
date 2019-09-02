@@ -1,6 +1,10 @@
 import GpsApiLocationSource from "./GpsApiLocationSource";
 import IpBasedLocationSource from "./IpBasedLocationSource";
 
+const GPS_TIMEOUT = 4000;
+const IP_TIMEOUT = 20000;
+const IPDATA_URL = "https://api.ipdata.co?api-key=5102d8d1676795d31695bc82a1fb00c8c51ad6d0d03326b039f39f60";
+
 export default class LocationSource {
     async checkLocation() {
         let location = await this._getGpsLocation();
@@ -8,7 +12,7 @@ export default class LocationSource {
         if (!location) location = await this._getIPLocation();
 
         if (location) return location;
-        else throw "Unable to determine the location"
+        else throw "Unable to determine the location";
     }
 
     async _getGpsLocation() {
@@ -28,7 +32,7 @@ export default class LocationSource {
 
         return await Promise.race([
             gps.checkLocation(),
-            this._timeout(4000)
+            this._timeout(GPS_TIMEOUT)
         ]);
     }
 
@@ -47,7 +51,8 @@ export default class LocationSource {
     async _getIPLocationWithTimeout() {
         return await Promise.race([
             new IpBasedLocationSource().checkLocation(),
-            new IpBasedLocationSource("https://api.ipdata.co?api-key=5102d8d1676795d31695bc82a1fb00c8c51ad6d0d03326b039f39f60").checkLocation()
+            new IpBasedLocationSource(IPDATA_URL).checkLocation(),
+            this._timeout(IP_TIMEOUT)
         ]);
     }
 
