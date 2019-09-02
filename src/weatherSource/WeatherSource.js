@@ -1,7 +1,6 @@
 import { relative } from "path";
 
 const API_KEY = '953349aaa2569f9cd4821f8c2ffda23a'
-const API_EXP = 'b6907d289e10d714a6e88b30761fae22'
 
 function _throw(text){
     throw text;
@@ -12,7 +11,7 @@ class WeatherAPI{
     // zwraca obiekt pogodowy
     // w parametrach należy podać dwie wartości string:
     // pierwszą 'miasto' i drugą 'państwo'
-    static async getWeather(city, country) {
+    static async getWeatherByPlace(city, country) {
         
         let dataUnparsed;
         
