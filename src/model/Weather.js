@@ -1,5 +1,5 @@
 export default class Weather{
-    
+
     constructor(){
 
     }
@@ -105,22 +105,22 @@ export default class Weather{
     /**
      * Static method calculating wind strength rating.
      * Thresholds based on Beaufort scale but chosen categories merged as deemed appropriate.
-     * @param {number} windSpeedKmH 
+     * @param {number} windSpeedMPS wind speed in meters per second 
      */
-    static windStrengthFromSpeed(windSpeedKmH){
-        if(typeof windSpeedKmH !== "number" || windSpeedKmH < 0 ){
+    static windStrengthFromSpeed(windSpeedMPS){
+        if(typeof windSpeedMPS !== "number" || windSpeedMPS < 0 ){
             throw new Error("Illegal argument");
         }
 
         let result = 0;
 
         switch(true){
-            case windSpeedKmH < 5: result = Weather.WIND.CALM; break;
-            case windSpeedKmH >= 5: result = Weather.WIND.LIGHT_BREEZE; break;
-            case windSpeedKmH >= 20: result = Weather.WIND.MODERATE_BREEZE; break;
-            case windSpeedKmH >= 39: result = Weather.WIND.STRONG_BREEZE; break;
-            case windSpeedKmH >= 50: result = Weather.WIND.GALE; break;
-            case windSpeedKmH >= 75: result = Weather.WIND.STORM; break;
+            case windSpeedMPS < 1.5: result = Weather.WIND.CALM; break;
+            case windSpeedMPS >= 1.5: result = Weather.WIND.LIGHT_BREEZE; break;
+            case windSpeedMPS >= 5.5: result = Weather.WIND.MODERATE_BREEZE; break;
+            case windSpeedMPS >= 10.8: result = Weather.WIND.STRONG_BREEZE; break;
+            case windSpeedMPS >= 13.9: result = Weather.WIND.GALE; break;
+            case windSpeedMPS >= 20.8: result = Weather.WIND.STORM; break;
         }
     }
 }
