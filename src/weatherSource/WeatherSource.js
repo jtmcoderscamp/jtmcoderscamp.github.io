@@ -1,129 +1,90 @@
-import {
-    relative
-} from "path";
+//do własnego użytku udostępniam klucz api
+//API_KEY: 953349aaa2569f9cd4821f8c2ffda23a
 
-const API_KEY = '953349aaa2569f9cd4821f8c2ffda23a'
+// przykładowa inicjalizacja obiektu:
+// var WeatherAPI = new OpenWeatherMapApi('http://api.openweathermap.org/data/2.5/','953349aaa2569f9cd4821f8c2ffda23a')
 
-class WeatherAPI {
+class OpenWeatherMapApi {
 
-    static _throw(text) {
-        throw text;
+    constructor(api_url_address, api_key) {
+        this.API_URL_ADDRESS = api_url_address
+        this.API_KEY = api_key
     }
 
-    static _verify(params) {
+    // metoda prywatna wyryfikująca parametry
+    // i na ich podstawie tworzy tekst URL, który następnie
+    // będzie umieszczany w polu adresu url metody `fetch`
+    _verify(params) {
         let constructUrl;
+        
+        if (params && Object.keys(params).length >= 1) {
+            if (params.latitude && params.longitude) {
+                constructUrl = `lat=${params.latitude}&lon=${params.longitude}`
 
-        if (params) {
-            params.latitude && params.longitude ? constructUrl = `lat=${params.latitude}&lon=${params.longitude}` :
-                params.city && params.country ? constructUrl = `q=${params.city},${params.country}` :
-                params.city ? constructUrl = `q=${params.city}` : this._throw('Wrong parameters')
+            } else if (params.city && params.country) {
+                constructUrl = `q=${params.city},${params.country}`
+
+            } else if (params.city) {
+                constructUrl = `q=${params.city}`
+
+            } else {
+                throw ('Wrong parameters')
+            }
 
         } else {
             throw 'No parameters were given'
+
         }
-        return constructUrl;
+        return constructUrl + `&APPID=${this.API_KEY}&units=metric`;
     }
-    // zwraca obiekt 1pogodowy
-    // w parametrach należy podać dwie wartości string:
-    // pierwszą 'miasto' i drugą 'państwo'
-    static async getWeatherByPlace(city, country) {
 
-        let dataUnparsed;
+    // metoda prywatna zwracająca potrzebne dane o 
+    // obecnej pogodzie z otrzymanego obiektu API
+    _constructCurrentWeatherObject(data) {
+        return {
+            main: data.main,
+            clouds: data.clouds,
+            weather: data.weather,
+            wind: data.wind,
+            place: data.name,
+            coords: data.coord
+        }
+    }
 
-        country
-            ?
-            dataUnparsed = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=metric`) :
-            dataUnparsed = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}&units=metric`)
-
+    //TODO zrobić model prognozy
+    _constructForecastWeatherObject(data) {
+        return data;
+    }
+    
+    // metoda prywatna odpowiadająca za główną mechanikę pobierania danych z Api
+    async _getWeather(params, weatherType, doo) {
+        let constructUrl = this._verify(params)
+        
+        let dataUnparsed = await fetch(this.API_URL_ADDRESS + weatherType + '?' + constructUrl)
         if (dataUnparsed.ok) {
             let data = await dataUnparsed.json();
-            // wyświetlenie całej zawartości odpowiedzi 
-            // console.log(data);
-
-            const dataModel = {
-                main: data.main,
-                clouds: data.clouds,
-                weather: data.weather,
-                wind: data.wind,
-                place: data.name,
-                coords: data.coord
-            }
-
-            return dataModel
+            return doo(data)
         }
-
         throw dataUnparsed;
     }
 
-    // zwraca obiekt pogodowy
-    // W parametrach należy przekazać obiekt z polami:
-    // latitude(szerokośc geo.) i longitude(długość geo.) 
-    static async getWeatherByCoordinates(coords) {
-
-        let dataUnparsed = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&APPID=${API_KEY}`)
-        if (dataUnparsed.ok) {
-            let data = await dataUnparsed.json();
-            // console.log(data);
-
-            const dataModel = {
-                main: data.main,
-                clouds: data.clouds,
-                weather: data.weather,
-                wind: data.wind,
-                place: data.name,
-                coords: data.coord
-            }
-
-            return dataModel
-        }
-
-        throw dataUnparsed;
-
-    }
-
-    // METODA TESTOWA !
-    // W parametrach należy umieśić obiekt, w którym będa pola 
-    // dla konkretnego sposobu poboru pogody
+    // metoda zwraca obiekt pogodowy
+    // W parametrach należy umieśić obiekt, w którym będa pola dla konkretnego sposobu poboru pogody
     // np. dla podanego wyłacznie miasta, obiekt wygląda nastepująco: {city: 'cityExample'}
     // np. dla współrzędnych: {latitude: 123.00, longitude: 0.03}
-    static async getWeather(params) {
-        let constructUrl = this._verify(params)
-
-        let dataUnparsed = await fetch(`http://api.openweathermap.org/data/2.5/weather?` + constructUrl + `&APPID=${API_KEY}`)
-        if (dataUnparsed.ok) {
-            let data = await dataUnparsed.json();
-
-            const dataModel = {
-                main: data.main,
-                clouds: data.clouds,
-                weather: data.weather,
-                wind: data.wind,
-                place: data.name,
-                coords: data.coord
-            }
-
-            return dataModel
-        }
-
-        throw dataUnparsed;
-
+    async getCurrentWeather(params) {
+        return this._getWeather(params, 'weather', (data) => {
+            return this._constructCurrentWeatherObject(data)
+        })
     }
 
     // Metoda zwracająca prognozę na nabliże 5 dni w interwałach 3 godzinnych
     // W parametrze podać obiekt posiadający odpowiednio opisane pola
-    static async getForecast(params) {
-        let constructUrl = this._verify(params)
-
-        let dataUnparsed = await fetch(`http://api.openweathermap.org/data/2.5/forecast?` + constructUrl + `&APPID=${API_KEY}&units=metric`)
-        if (dataUnparsed.ok) {
-            let data = await dataUnparsed.json();
-
-            return data;
-        }
-
-        throw dataUnparsed;
-
+    async getForecast(params) {
+        return this._getWeather(params, 'forecast', (data) => {
+            return this._constructForecastWeatherObject(data)
+        })
     }
 }
 
-export default WeatherAPI;
+export default OpenWeatherMapApi;

@@ -1,35 +1,14 @@
 ﻿import GpsApiLocationSource from "./locationSource/GpsApiLocationSource";
-import WeatherAPI from './weatherSource/WeatherSource'
-// plik inicjalizacyjny aplikacji
+import OpenWeatherMapApi from './weatherSource/WeatherSource'
 
-console.log("...");
+var WeatherAPI = new OpenWeatherMapApi('http://api.openweathermap.org/data/2.5/','953349aaa2569f9cd4821f8c2ffda23a')
 
-// Metoda z użyciem współrzędnych
-// Pobieranie i obłsługa wyjątków
-WeatherAPI.getWeatherByObject({lat:51.5,lon:-0.12})
+WeatherAPI.getForecast({
+    city:'london'
+})
     .then((res) => {
         console.log(res)
     })
     .catch((e) => {
         console.log(e);
     })
-
-// Metoda z użyciem Miasta i Państwa
-// Pobieranie i obłsługa wyjątków
-WeatherAPI.getWeatherByObject({city:'london',country:'uk'})
-    .then((res) => {
-        console.log(res)
-    })
-    .catch((e) => {
-        console.log(e);
-    })
-
-// Metoda z użyciem TYLKO Miasta
-// Pobieranie i obłsługa wyjątków
-WeatherAPI.getWeatherByObject()
-.then((res) => {
-    console.log(res)
-})
-.catch((e) => {
-    console.log(e);
-})
