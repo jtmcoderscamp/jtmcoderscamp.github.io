@@ -30,7 +30,7 @@ export default class LocationSource {
     async _getGpsLocationWithTimeout() {
         let gps = new GpsApiLocationSource();
 
-        return await Promise.race([
+        return Promise.race([
             gps.checkLocation(),
             this._timeout(GPS_TIMEOUT)
         ]);
@@ -49,14 +49,26 @@ export default class LocationSource {
     }
 
     async _getIPLocationWithTimeout() {
-        return await Promise.race([
+        return this._raceWithoutRejection([
             new IpBasedLocationSource().checkLocation(),
             new IpBasedLocationSource(IPDATA_URL).checkLocation(),
             this._timeout(IP_TIMEOUT)
         ]);
     }
 
-    async _timeout(time) {
+    _timeout(time) {
         return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    _raceWithoutRejection(promises) {
+        let indexPromises = promises.map((p, index) => p.catch(() => {
+            throw index;
+        }));
+
+        return Promise.race(indexPromises).catch(index => {
+            promises.splice(index, 1);
+
+            return this._raceWithoutRejection(promises);
+        });
     }
 }
