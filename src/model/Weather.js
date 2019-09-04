@@ -1,6 +1,12 @@
 export default class Weather{
 
-    constructor(){
+    constructor(temperatureCelsius = 0,
+                cloudiness = Weather.CLOUDINESS.NONE,
+                precipitationType = Weather.PRECIPITATION_TYPE.RAIN,
+                precipitation = Weather.PRECIPITATION.NONE,
+                windDirectionDegrees = 0,
+                windStrength = Weather.WIND.CALM,
+                specialWeather = []){
 
     }
 
@@ -18,7 +24,7 @@ export default class Weather{
     }
 
     /**
-     * Static constant: precipitation ratings
+     * Static constant: precipitation amount ratings
      */
     static get PRECIPITATION(){
         return {
@@ -27,6 +33,16 @@ export default class Weather{
             MODERATE: 2,
             STRONG: 3,
             EXTREME: 4
+        };
+    }
+
+    /**
+     * Static constant: precipitation types
+     */
+    static get PRECIPITATION_TYPE(){
+        return {
+            RAIN: "rain",
+            SNOW: "snow"
         };
     }
 
@@ -49,7 +65,6 @@ export default class Weather{
      */
     static get SPECIAL_WEATHER(){
         return {
-            SNOW: "snow",
             STORM: "storm",
             HAIL: "hail"
         };
