@@ -6,9 +6,9 @@
 
 class OpenWeatherMapApi {
 
-    constructor(api_url_address, api_key) {
-        this.API_URL_ADDRESS = api_url_address
-        this.API_KEY = api_key
+    constructor(apiUrlAddress, apiKey) {
+        this.API_URL_ADDRESS = apiUrlAddress
+        this.API_KEY = apiKey
     }
 
     // metoda prywatna wyryfikująca parametry
@@ -57,13 +57,13 @@ class OpenWeatherMapApi {
     }
     
     // metoda prywatna odpowiadająca za główną mechanikę pobierania danych z Api
-    async _getWeather(params, weatherType, doo) {
+    async _getWeather(params, weatherType, dataContructorFunction) {
         let constructUrl = this._verify(params)
         
         let dataUnparsed = await fetch(this.API_URL_ADDRESS + weatherType + '?' + constructUrl)
         if (dataUnparsed.ok) {
             let data = await dataUnparsed.json();
-            return doo(data)
+            return dataContructorFunction(data)
         }
         throw dataUnparsed;
     }
