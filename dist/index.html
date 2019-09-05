@@ -1,34 +1,52 @@
 <!DOCTYPE html>
-<html lang="pl-PL">
+<html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Wesoła Pogoda</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Main</title>
 	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/css?family=Chilanka|Itim&display=swap" rel="stylesheet">
-	<script src="./bundle.js" async></script>
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Luckiest+Guy&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<img class="city" src="icons/city.jpg" alt="city">
-	<!-- <div id="root"></div> -->
-	<div class="search-box">
-		<input class="search-txt" type="text" name="" placeholder="Type to search">
-		<a class="search-btn" href="#">
-			<img class="search-icon" src="icons/search.svg" alt="search-button">
-		</a>
+	<div class="main-page">
+		<div class="search-box">
+			<input class="search-txt" type="text" name="" placeholder="Choose the city">
+			<a class="search-btn" href="#">
+				<img class="search-icon" src="icons/search.svg" alt="search-button">
+			</a>
+		</div>
+		<div class="clouds">
+			<div class="white"></div>
+			<div class="white-2"></div>
+		</div>
+
+		<div class="logo">
+			<p><span class="span-logo">WEATHER</span> <br> BUNNY</p>
+		</div>
+
+		<div class="main-content">
+
+			<img class="sun" src="icons/sun.svg" alt="sun">
+			<h3>23°</h3>
+			<h2>Wroclaw, Poland</h1>
+				<img class="earth" src="img/earth.jpg" alt="earth">
+				<img class="bunny" src="icons/bunny.svg" alt="bunny">
+				<h1><span class="span-content">Hi, I'm a weather bunny! </span><br> Please select your location <br> to
+					find out how is the
+					<br>
+					weather at
+					your
+					place
+					today.
+				</h1>
+		</div>
 	</div>
-	<div>
-		<img class="bunny" src="icons/bunny.svg" alt="bunny">
-		<h1><span>Hi, I'm a weather bunny! </span><br> Please select your location <br> to find out how is the <br>
-			weather at
-			your
-			place
-			today.
-		</h1>
-	</div>
+
+
 </body>
 
 </html>
