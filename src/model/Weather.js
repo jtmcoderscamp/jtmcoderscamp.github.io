@@ -1,13 +1,139 @@
 export default class Weather{
 
     constructor(temperatureCelsius = 0,
-                cloudiness = Weather.CLOUDINESS.NONE,
+                cloudCover = 0,
                 precipitationType = Weather.PRECIPITATION_TYPE.RAIN,
-                precipitation = Weather.PRECIPITATION.NONE,
+                precipitation = 0,
                 windDirectionDegrees = 0,
-                windStrength = Weather.WIND.CALM,
+                windSpeed = 0,
                 specialWeather = []){
+        this.temperature = temperatureCelsius;
+        this.cloudCover = cloudCover;
+        this.precipitation = precipitation;
+        this.precipitationType = precipitationType;
+        this.windDirection = windDirectionDegrees;
+        this.windSpeed = windSpeed;
+        this.specialWeather = specialWeather;
+    }
 
+    get temperature(){
+        return this._temperature;
+    }
+    get cloudCover(){
+        return this._cloudCover;
+    }
+    get precipitation(){
+        return this._precipitation;
+    }
+    get precipitationType(){
+        return this._precipitationType;
+    }
+    get windDirection(){
+        return this._windDirection;
+    }
+    get windSpeed(){
+        return this._windSpeed;
+    }
+    get specialWeather(){
+        return this._specialWeather;
+    }
+
+    get cloudinessRating(){
+        return this._cloudinessRating;
+    }
+    get precipitationRating(){
+        return this._precipitationRating;
+    }
+    get windStrengthRating(){
+        return this._windStrengthRating;
+    }
+
+
+    set temperature(temperature){
+        if(typeof temperature === "number"){                
+                this._temperature = temperature;
+        }
+        else{
+            throw new Error("Invalid temperature value: "+temperature);
+        }
+    }
+
+    set cloudCover(cloudCover){
+        if(typeof cloudCover === "number"
+            && cloudCover >= 0
+            && cloudCover <=100){
+                
+                this._cloudCover = cloudCover;
+                this._cloudinessRating = Weather.cloudinessFromCloudCoveragePercent(cloudCover);
+        }
+        else{
+            throw new Error("Invalid cloud cover percent: "+cloudCover);
+        }
+    }
+    
+    set precipitation(precipitation){
+        if(typeof precipitation === "number"
+            && precipitation >= 0){
+                
+                this._precipitation = precipitation;
+                this._precipitationRating = Weather.precipitationRatingFromPrecipitationPerHour(precipitation);
+        }
+        else{
+            throw new Error("Invalid precipitation amount: "+precipitation);
+        }
+    }
+
+    set precipitationType(precipitationType){
+        switch (precipitationType) {
+            case Weather.PRECIPITATION_TYPE.RAIN:
+            case Weather.PRECIPITATION_TYPE.SNOW:
+                this._precipitationType = precipitationType;
+                break;
+            default: throw new Error("Invalid precipitation type: "+precipitationType);
+        }
+    }
+
+    set windDirection(windDirection){
+        if(typeof windDirection === "number"
+            && windDirection >= 0
+            && windDirection <=360){
+                
+                this._windDirection = windDirection;
+        }
+        else{
+            throw new Error("Invalid wind direction: "+windDirection);
+        }
+    }
+
+    set windSpeed(windSpeed){
+        if(typeof windSpeed === "number"
+            && windSpeed >= 0){
+                
+                this._windSpeed = windSpeed;
+                this._windStrengthRating = Weather.windStrengthFromSpeed(windSpeed)
+        }
+        else{
+            throw new Error("Invalid wind speed: "+windSpeed);
+        }
+    }
+
+    set specialWeather(specialWeather){
+        if(Array.isArray(specialWeather)){
+            let keys = Object.keys(Weather.SPECIAL_WEATHER);
+            for(let i=0;i<specialWeather.length;i++){
+                let j = 0;
+                let legalValue = false;
+                while(!legalValue && j<keys.length){
+                    legalValue = Weather.SPECIAL_WEATHER[keys[j]]===specialWeather[i];
+                    j++;
+                }
+                if(!legalValue) throw new Error("Illegal special weather condition: "+specialWeather[i]);
+            }
+            this._specialWeather = specialWeather;
+        }
+        else{
+            throw new Error("Illegal special weather conditions provided (not an array)");
+        }
     }
 
     /**
@@ -95,15 +221,12 @@ export default class Weather{
 
     /**
      * Static method calculating precipitation rating
-     * @param {number} precipitationMilimeters amount of precipitation per square meter in set period
-     * @param {number} periodHours set period in hours
+     * @param {number} precipitationPerHour amount of precipitation per hour in milimeters
      */
-    static precipitationRatingFromPrecipitationAmount(precipitationMilimeters, periodHours){
-        if(typeof precipitationMilimeters !== "number" || precipitationMilimeters < 0 || typeof periodHours !== "number" || periodHours <= 0){
+    static precipitationRatingFromPrecipitationPerHour(precipitationPerHour){
+        if(typeof precipitationPerHour !== "number" || precipitationPerHour < 0){
             throw new Error("Illegal argument");
         }
-
-        let precipitationPerHour = precipitationMilimeters/periodHours;
         let result;
 
         switch(true){
@@ -137,5 +260,6 @@ export default class Weather{
             case windSpeedMPS >= 13.9: result = Weather.WIND.GALE; break;
             case windSpeedMPS >= 20.8: result = Weather.WIND.STORM; break;
         }
+        return result;
     }
 }
