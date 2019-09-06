@@ -1,5 +1,15 @@
 export default class Weather{
 
+    /**
+     * Constructor creating Weather instance
+     * @param {number} temperatureCelsius temperature (degrees Celsius)
+     * @param {number} cloudCover cloud cover (0-100 percent)
+     * @param {Weather.PRECIPITATION_TYPE.*} precipitationType precipitation type
+     * @param {number} precipitation precipitation amount (0+ milimeters per hour)
+     * @param {number} windDirectionDegrees wind direction (0-360 degrees clockwise from North)
+     * @param {number} windSpeed wind speed (0+ meters per second)
+     * @param {[Weather.SPECIAL_WEATHER.*]} specialWeather (special weather conditions)
+     */
     constructor(temperatureCelsius = 0,
                 cloudCover = 0,
                 precipitationType = Weather.PRECIPITATION_TYPE.RAIN,
@@ -14,6 +24,25 @@ export default class Weather{
         this.windDirection = windDirectionDegrees;
         this.windSpeed = windSpeed;
         this.specialWeather = specialWeather;
+    }
+
+    /**
+     * derived cloudinessRating variable, see Weather.CLOUDINESS
+     */
+    get cloudinessRating(){
+        return this._cloudinessRating;
+    }
+    /**
+     * derived precipitationRating variable, see Weather.PRECIPITATION
+     */
+    get precipitationRating(){
+        return this._precipitationRating;
+    }
+    /**
+     * derived precipitationRating variable, see Weather.WIND
+     */
+    get windStrengthRating(){
+        return this._windStrengthRating;
     }
 
     get temperature(){
@@ -38,17 +67,6 @@ export default class Weather{
         return this._specialWeather;
     }
 
-    get cloudinessRating(){
-        return this._cloudinessRating;
-    }
-    get precipitationRating(){
-        return this._precipitationRating;
-    }
-    get windStrengthRating(){
-        return this._windStrengthRating;
-    }
-
-
     set temperature(temperature){
         if(typeof temperature === "number"){                
                 this._temperature = temperature;
@@ -58,6 +76,9 @@ export default class Weather{
         }
     }
 
+    /**
+     * setter for cloudCover (percent) and derived CloudinessRating
+     */
     set cloudCover(cloudCover){
         if(typeof cloudCover === "number"
             && cloudCover >= 0
@@ -71,6 +92,9 @@ export default class Weather{
         }
     }
     
+    /**
+     * setter for precipitation (mm per hour) and derived precipitationRating
+     */
     set precipitation(precipitation){
         if(typeof precipitation === "number"
             && precipitation >= 0){
@@ -83,6 +107,9 @@ export default class Weather{
         }
     }
 
+    /**
+     * setter for precipitationType (see Weather.PRECIPITATION_TYPE)
+     */
     set precipitationType(precipitationType){
         switch (precipitationType) {
             case Weather.PRECIPITATION_TYPE.RAIN:
@@ -93,6 +120,9 @@ export default class Weather{
         }
     }
 
+    /**
+     * setter for windDirection (degrees)
+     */
     set windDirection(windDirection){
         if(typeof windDirection === "number"
             && windDirection >= 0
@@ -105,6 +135,9 @@ export default class Weather{
         }
     }
 
+    /**
+     * setter for windSpeed (meters per second) and derived windStrengthRating
+     */
     set windSpeed(windSpeed){
         if(typeof windSpeed === "number"
             && windSpeed >= 0){
@@ -117,6 +150,9 @@ export default class Weather{
         }
     }
 
+    /**
+     * setter for specialWeather (array of Weather.SPECIAL_WEATHER.* strings) 
+     */
     set specialWeather(specialWeather){
         if(Array.isArray(specialWeather)){
             let keys = Object.keys(Weather.SPECIAL_WEATHER);
