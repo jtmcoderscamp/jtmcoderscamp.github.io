@@ -47,19 +47,18 @@ body {
     float: left;
     padding: 0;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     transition: 0.4s;
     line-height: 40px;
     width: 290px;
-    font-family: 'Itim', cursive;
-
+    font-family: 'Paytone One', sans-serif;
 
 }
 
 .logo {
     position: absolute;
+    top: 0%;
     left: 47%;
-    /* background-color: #CCDAB4; */
     border-radius: 50%;
     width: 70px;
     height: 70px;
@@ -84,19 +83,21 @@ h1 {
     font-size: 2vw;
     line-height: 1.5;
     text-transform: uppercase;
-    font-family: 'Itim', cursive;
+    font-family: 'Paytone One', sans-serif;
 
 }
 
 
 h2 {
     position: absolute;
-    left: 70%;
-    top: 30%;
+    left: 80%;
+    top: 33%;
+    transform: translate(-50%, -50%);
     z-index: 10;
     font-size: 2vw;
-    font-family: 'Itim', cursive;
     color: #757575;
+    font-family: 'Paytone One', sans-serif;
+
 }
 
 h3 {
@@ -104,10 +105,12 @@ h3 {
     left: 85%;
     top: 3%;
     color: rgba(64, 69, 75, 0.89);
-    font-size: 10vw;
+    font-size: 100px;
     z-index: 10;
     transform: translate(-50%, -50%);
+    font-family: 'Dancing Script', cursive;
 }
+
 
 p {
     position: absolute;
@@ -116,6 +119,7 @@ p {
     font-size: 30px;
     color: 222;
     z-index: 10;
+    font-family: 'Dancing Script', cursive;
 }
 
 .span-content {
@@ -127,7 +131,7 @@ p {
 .white {
     position: absolute;
     left: 35%;
-    top: 20%;
+    top: 30%;
     background-color: #fff;
     border-radius: 80%;
     width: 60vw;
@@ -137,8 +141,8 @@ p {
 
 .white-2 {
     position: absolute;
-    left: 45%;
-    top: -10%;
+    left: 43%;
+    top: -2%;
     background-color: #fff;
     border-radius: 50%;
     width: 20vw;
@@ -154,7 +158,7 @@ p {
     box-sizing: border-box;
     position: absolute;
     left: 25%;
-    top: 40%;
+    top: 50%;
     transform: translate(-50%, -50%);
     width: 50vw;
     height: 60vw;
@@ -172,7 +176,6 @@ p {
 .change-icon {
     position: absolute;
     color: red;
-    border: 3px solid red;
     left: 53%;
     top: 70%;
     transform: translate(-50%, -50%);
@@ -191,16 +194,122 @@ p {
 }
 
 
+@media only screen and (max-width: 850px) {
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .search-box {
+        position: absolute;
+        top: 57%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
+        height: 10vh;
+    }
+
+    .logo {
+        left: -2%;
+        top: -5%;
+        width: 10vw;
+        height: 10vh;
+    }
+
+    .main {
+        position: absolute;
+        left: 40%;
+        top: 30%;
+        width: 20%;
+    }
+
+    h1 {
+        width: 100vw;
+        height: 20%;
+        transform: translate(-50%, -50%);
+        left: 85%;
+        top: 88%;
+        font-size: 19px;
+    }
+
+    h2 {
+        left: 50%;
+        top: 40%;
+        font-size: 3vw;
+    }
+
+    h3 {
+        left: 70%;
+        top: 5%;
+        font-size: 120px;
+    }
+
+
+    .earth {
+        top: 0vh;
+        width: 150vw;
+        height: 210vh;
+        opacity: 0.4;
+    }
+
+
+
+    .bunny {
+        top: 75%;
+        left: 20%;
+    }
+
+    .white {
+        top: 10vh;
+        left: 0%;
+        width: 99vw;
+        height: 90vh;
+
+    }
+
+    .white-2 {
+        top: 65vh;
+        left: 5%;
+        width: 90vw;
+        height: 60vh;
+    }
+
+    .change-icon {
+        border: 3px solid red;
+        top: 135.5vh;
+        left: 50%;
+        width: 90vw;
+        height: 60vh;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    h3 {
+        font-size: 100px;
+        top: 8%;
+    }
+
+    h1 {
+        left: 75%;
+    }
+
+    .bunny {
+        left: 13%;
+    }
+}
+
+
+
+
 
 @keyframes text-focus-in {
     0% {
-        -webkit-filter: blur(12px);
         filter: blur(12px);
         opacity: 0;
     }
 
     100% {
-        -webkit-filter: blur(0px);
         filter: blur(0px);
         opacity: 1;
     }
