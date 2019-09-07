@@ -3,7 +3,6 @@ body {
     padding: 0;
     overflow: hidden;
     color: #5A6F84;
-    /* background-color: aqua; */
 }
 
 .search-box {
@@ -19,7 +18,6 @@ body {
 }
 
 .search-box:hover>.search-txt {
-    /* width: 290px; */
     padding: 0 6px;
 }
 
@@ -67,19 +65,20 @@ body {
     height: 70px;
     z-index: 10;
     font-family: 'Dancing Script', cursive;
+    animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
 .span-logo {
     position: absolute;
     left: 20px;
-    color: #E39854;
+    color: rgb(180, 184, 73);
 }
 
 /* fonts */
 
 h1 {
     position: absolute;
-    left: 60%;
+    left: 68%;
     top: 60%;
     z-index: 10;
     font-size: 2vw;
@@ -120,7 +119,7 @@ p {
 }
 
 .span-content {
-    color: #E39854;
+    color: rgb(180, 184, 73);
 }
 
 
@@ -164,17 +163,45 @@ p {
 
 .bunny {
     position: absolute;
-    left: 45%;
-    top: 50%;
+    left: 15%;
+    top: 55%;
     width: 10vw;
     z-index: 10;
 }
 
-.sun {
+.change-icon {
+    position: absolute;
+    color: red;
+    border: 3px solid red;
+    left: 53%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 35%;
+    z-index: 16;
+}
+
+.main {
     position: absolute;
     left: 70%;
     top: 21%;
     width: 10%;
     z-index: 11;
     transform: translate(-50%, -50%);
+}
+
+
+
+@keyframes text-focus-in {
+    0% {
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
 }
