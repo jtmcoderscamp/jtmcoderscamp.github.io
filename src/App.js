@@ -4,7 +4,7 @@ import WeatherPresentation from "./userInterface/WeatherPresentation";
 
 export default class App {
     static get WEATHER_CONTAINER() {
-        return document.querySelector('.main-page');
+        return document.querySelector('.weather-container');
     }
 
     async start() {
