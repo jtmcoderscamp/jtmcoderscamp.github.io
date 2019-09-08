@@ -12,11 +12,11 @@ let locationSource = new IpBasedLocationSource();
 let node = document.getElementById("root");
 
 let displayLocalWeather = async function() {
-    //let location = await locationSource.checkLocation();
-    let location = {latitude: 1.0, longitude: 1.0};
+    let location = await locationSource.checkLocation();
+    //let location = {latitude: 1.0, longitude: 1.0};
     console.log(location);
-    //await weatherAPI.getCurrentWeather(location);
-    let weather = new Weather(25.13);
+    let weather = await weatherAPI.getCurrentWeather(location);
+    //let weather = new Weather(25.13);
     console.log(weather);
     let test = new WeatherPresentation(node,weather);
 }
