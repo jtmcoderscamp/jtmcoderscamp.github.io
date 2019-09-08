@@ -1,3 +1,4 @@
+import "./weather-presentation.css";
 import Weather from "../model/Weather";
 
 export default class WeatherPresentation {
@@ -48,6 +49,20 @@ export default class WeatherPresentation {
         }
     }
 
+    _addSpecialWeatherClass(node) {
+        let specialWeather = this._weather.specialWeather;
+        for(let i = 0; i < specialWeather.length; i++){
+            switch (specialWeather[i]) {
+                case Weather.SPECIAL_WEATHER.STORM:
+                    node.classList.add("storm");
+                    break;
+                case Weather.SPECIAL_WEATHER.HAIL:
+                    node.classList.add("hail");
+                    break;
+            }
+        }
+    }
+
     _addPrecipitationClasses(node) {
         if (this._weather.precipitationRating !== Weather.PRECIPITATION.NONE) {
             switch (this._weather.precipitationType) {
@@ -81,6 +96,7 @@ export default class WeatherPresentation {
         weatherContainerNode.classList.add("weather-container");
         this._addCloudinessClass(weatherContainerNode);
         this._addPrecipitationClasses(weatherContainerNode);
+        this._addSpecialWeatherClass(weatherContainerNode);
 
         weatherContainerNode.appendChild(this._setUpWeatherIcon());
         weatherContainerNode.appendChild(this._setUpTemperatureDisplay());
@@ -97,10 +113,10 @@ export default class WeatherPresentation {
 
     _setUpTemperatureDisplay(){
         let temperatureNode = document.createElement("div");
-        temperatureNode.classList.add("temperature-container");
+        temperatureNode.classList.add("temperature");
 
-        let temperatureDisplay = document.createElement("h1");
-        temperatureDisplay.innerText = this._weather.temperature+"°C";
+        let temperatureDisplay = document.createElement("h3");
+        temperatureDisplay.innerText = Math.floor(this._weather.temperature)+"°C";
         temperatureNode.appendChild(temperatureDisplay);
 
         return temperatureNode;
