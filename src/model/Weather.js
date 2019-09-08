@@ -1,3 +1,5 @@
+import Location from "./Location";
+
 export default class Weather{
 
     /**
@@ -9,6 +11,7 @@ export default class Weather{
      * @param {number} windDirectionDegrees wind direction (0-360 degrees clockwise from North)
      * @param {number} windSpeed wind speed (0+ meters per second)
      * @param {[Weather.SPECIAL_WEATHER.*]} specialWeather (special weather conditions)
+     * @param {Location} location coordinates for which the weather is provided
      */
     constructor(temperatureCelsius = 0,
                 cloudCover = 0,
@@ -16,7 +19,8 @@ export default class Weather{
                 precipitation = 0,
                 windDirectionDegrees = 0,
                 windSpeed = 0,
-                specialWeather = []){
+                specialWeather = [],
+                location = undefined){
         this.temperature = temperatureCelsius;
         this.cloudCover = cloudCover;
         this.precipitation = precipitation;
@@ -24,6 +28,7 @@ export default class Weather{
         this.windDirection = windDirectionDegrees;
         this.windSpeed = windSpeed;
         this.specialWeather = specialWeather;
+        this.location = location;
     }
 
     /**
@@ -65,6 +70,10 @@ export default class Weather{
     }
     get specialWeather(){
         return this._specialWeather;
+    }
+
+    get location(){
+        return this._location;
     }
 
     set temperature(temperature){
@@ -169,6 +178,15 @@ export default class Weather{
         }
         else{
             throw new Error("Illegal special weather conditions provided (not an array)");
+        }
+    }
+
+    set location(location){
+        if(typeof location === "undefined" || Location.validateCoordinates(location)){
+            this._location = location;
+        }
+        else {
+            throw new Error("Invalid coordinates");
         }
     }
 
