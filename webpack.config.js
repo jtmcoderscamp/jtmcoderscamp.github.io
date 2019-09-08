@@ -23,6 +23,18 @@ module.exports = {
 						presets: ["@babel/preset-env"]
 					}
 				}
+			},
+            {
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[path][name].[ext]',
+							context: path.resolve(__dirname, "src/")
+						}
+					}
+				]
 			}
 		]
 	}
