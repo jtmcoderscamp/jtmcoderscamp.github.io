@@ -7,16 +7,24 @@ export default class App {
         return document.querySelector('.weather-presentation-container');
     }
 
+    //metoda statyczna do pobrania przycisku odpowiedzialnego za pobranie pogody
+    static get SUBMIT_BUTTON(){
+        return document.querySelector(
+            '.search-btn'
+        )
+    }
+
     static get INPUT_FIELD() {
         return document.querySelector(
             // TODO:: podpiąć jakoś formularz
+            '.search-text'
         );
     }
 
     async start() {
         const weather = await this._checkWeather();
 
-        this._addEventListenerAtDocumentReady(weather, this._onDocumentReady);
+        this._addEventListenerOnDocumentReady(weather, this._onDocumentReady);
     }
 
     _addEventListenerOnDocumentReady(weather, callback) {
@@ -28,7 +36,8 @@ export default class App {
     }
 
     _onDocumentReady(weather) {
-        const weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
+        this.weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
+        
 
         this._addInputHandler(weatherPresentation);
     }
@@ -40,6 +49,25 @@ export default class App {
         
         // let weather = {};
         // weatherPresentation.changeWeather(weather);
+        let submitButton = App.SUBMIT_BUTTON;
+
+        submitButton.addEventListener('OnClick',this._changeWeatherOnUserInputHandler)
+        console.log('Added event handler');
+        
+    }
+
+    _changeWeatherOnUserInputHandler(event){
+        let userRequestedCity = INPUT_FIELD.innerText;
+        
+        weatherAPI.getCurrentWeather({
+            city: userRequestedCity
+        }).then((receivedWeather) =>{
+            this.weatherPresentation.changeWeather(receivedWeather)
+        }).catch((error) => {
+            // good practic
+            console.log(error)
+        })
+
     }
 
     async _checkWeather() {
