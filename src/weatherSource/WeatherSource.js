@@ -18,15 +18,15 @@ class OpenWeatherMapApi {
     // będzie umieszczany w polu adresu url metody `fetch`
     _verify(params) {
         let constructUrl;
-
+        
         if (params && Object.keys(params).length >= 1) {
-            if (params.latitude && params.longitude) {
+            if (typeof params.latitude == 'number' && typeof params.longitude == 'number') {
                 constructUrl = `lat=${params.latitude}&lon=${params.longitude}`
 
-            } else if (params.city && params.country) {
+            } else if (typeof params.city == 'string' && typeof params.country == 'string') {
                 constructUrl = `q=${params.city},${params.country}`
 
-            } else if (params.city) {
+            } else if (typeof params.city == 'string') {
                 constructUrl = `q=${params.city}`
 
             } else {
@@ -70,7 +70,7 @@ class OpenWeatherMapApi {
     // obecnej pogodzie z otrzymanego obiektu API
     _constructCurrentWeatherObject(data) {
         var dataPrecipitationObject = this._getPrecipitationFromDataModel(data)
-
+        
         return new Weather(
             data.main.temp,
             data.clouds.all,
