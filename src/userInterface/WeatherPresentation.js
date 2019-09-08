@@ -100,7 +100,7 @@ export default class WeatherPresentation {
         temperatureNode.classList.add("temperature-container");
 
         let temperatureDisplay = document.createElement("h1");
-        temperatureDisplay.innerText = this._weather.temperature+"°C";
+        temperatureDisplay.innerText = Math.floor(this._weather.temperature)+"°C";
         temperatureNode.appendChild(temperatureDisplay);
 
         return temperatureNode;
