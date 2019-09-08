@@ -1,3 +1,5 @@
+import Weather from '../model/Weather'
+
 //do własnego użytku udostępniam klucz api
 //API_KEY: 953349aaa2569f9cd4821f8c2ffda23a
 
@@ -16,7 +18,7 @@ class OpenWeatherMapApi {
     // będzie umieszczany w polu adresu url metody `fetch`
     _verify(params) {
         let constructUrl;
-        
+
         if (params && Object.keys(params).length >= 1) {
             if (params.latitude && params.longitude) {
                 constructUrl = `lat=${params.latitude}&lon=${params.longitude}`
@@ -38,28 +40,56 @@ class OpenWeatherMapApi {
         return constructUrl + `&APPID=${this.API_KEY}&units=metric`;
     }
 
+    // metoda prywatna do transformacji obiektu rain z obiektu data
+    // do obiektu dataPrecipitaionObject
+    _getPrecipitationFromDataModel(dataModel) {
+        let dataPrecipitationObject = {
+            precipitation:0,
+            precipitationType: Weather.PRECIPITATION_TYPE.RAIN
+        }
+
+        if (dataModel.rain) {
+            if (dataModel.rain['1h']) 
+                dataPrecipitationObject.precipitation = dataModel.rain['1h'];
+            else
+                dataPrecipitationObject.precipitation = dataModel.rain['3h'];
+
+        } else if (dataModel.snow) {
+            dataPrecipitationObject.precipitationType = Weather.PRECIPITATION_TYPE.SNOW;
+
+            if (dataModel.snow['1h']) 
+                dataPrecipitationObject.precipitation = dataModel.snow['1h'];
+            else
+                dataPrecipitationObject.precipitation = dataModel.snow['3h'];
+        }
+
+        return dataPrecipitationObject;
+    }
+
     // metoda prywatna zwracająca potrzebne dane o 
     // obecnej pogodzie z otrzymanego obiektu API
     _constructCurrentWeatherObject(data) {
-        return {
-            main: data.main,
-            clouds: data.clouds,
-            weather: data.weather,
-            wind: data.wind,
-            place: data.name,
-            coords: data.coord
-        }
+        var dataPrecipitationObject = this._getPrecipitationFromDataModel(data)
+
+        return new Weather(
+            data.main.temp,
+            data.clouds.all,
+            dataPrecipitationObject.precipitationType,
+            dataPrecipitationObject.precipitation,
+            data.wind.deg,
+            data.wind.speed
+        )
     }
 
     //TODO zrobić model prognozy
     _constructForecastWeatherObject(data) {
         return data;
     }
-    
+
     // metoda prywatna odpowiadająca za główną mechanikę pobierania danych z Api
     async _getWeather(params, weatherType, dataContructorFunction) {
         let constructUrl = this._verify(params)
-        
+
         let dataUnparsed = await fetch(this.API_URL_ADDRESS + weatherType + '?' + constructUrl)
         if (dataUnparsed.ok) {
             let data = await dataUnparsed.json();
