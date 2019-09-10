@@ -24,11 +24,11 @@ export default class App {
 
     _onDocumentReady(weather) {
         let weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
-        let cityInputForm = new CityInputForm(weatherPresentation);
+        CityInputForm.addInputHandler(weatherPresentation);
     }
 
     async _checkWeather() {
-        const weatherAPI = new WeatherSource('http://api.openweathermap.org/data/2.5/', '953349aaa2569f9cd4821f8c2ffda23a');
+        const weatherAPI = new WeatherSource();
         const location = await this._checkLocation();
 
         return weatherAPI.getCurrentWeather(location);

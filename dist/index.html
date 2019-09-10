@@ -1,73 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Main</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Dancing+Script|Luckiest+Guy&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Acme|Itim|Lobster|Paytone+One&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-
-  <body>
-    <div class="main-page">
-      <div class="search-box">
-        <input
-          class="search-txt"
-          type="text"
-          name=""
-          placeholder="Choose the city"
-        />
-        <a class="search-btn" href="#">
-          <img class="search-icon" src="icons/search.svg" alt="search-button" />
-        </a>
-      </div>
-
-      <div class="clouds">
-        <div class="white"></div>
-        <div class="white-2"></div>
-      </div>
-
-      <div class="logo">
-        <p>
-          <span class="span-logo">WEATHER</span> <br />
-          BUNNY
-        </p>
-	  </div>
-	  
-
-      <div class="weather-presentation-container">
-			<div class="icons">
-				<img class="main" src="icons/main.svg" alt="main" />
-			</div>
-			
-			<div class="temperature">
-				<h3>23°</h3>
-			</div>
-				  
-			<div class="location">
-				<h2>Wroclaw</h1>
-			</div>
-	  </div>
-
-      <div class="static-content">
-        <img class="earth" src="img/earth.jpg" alt="earth" />
-        <img class="bunny" src="icons/bunny.svg" alt="bunny" />
-        <h1>
-          <span class="span-content">Hi, I'm a weather bunny! </span><br />
-          Please select your location <br />
-          to find out how is the
-          <br />
-          weather at your place today.
-        </h1>
-      </div>
-    </div>
-  </body>
+<html lang="pl-PL">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Wesoła Pogoda</title>
+		<script src="./bundle.js" async></script>
+	</head>
+	<body>
+        <div id="root" class="weather-presentation-container"></div>
+        <div class="search-btn"></div>
+        <div class="search-text"></div>
+	</body>
 </html>
