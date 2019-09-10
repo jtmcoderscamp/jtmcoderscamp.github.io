@@ -1,18 +1,11 @@
 import LocationSource from "./locationSource/LocationSource";
 import WeatherSource from "./weatherSource/WeatherSource";
 import WeatherPresentation from "./userInterface/WeatherPresentation";
+import CityInputForm from "./userInterface/CityInputForm";
 
 export default class App {
     static get WEATHER_CONTAINER() {
         return document.querySelector('.weather-presentation-container');
-    }
-
-    static get SUBMIT_BUTTON() {
-        return document.querySelector('.search-btn')
-    }
-
-    static get INPUT_FIELD() {
-        return document.querySelector('.search-text');
     }
 
     async start() {
@@ -30,23 +23,8 @@ export default class App {
     }
 
     _onDocumentReady(weather) {
-        this.weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
-
-        this._addInputHandler(weatherPresentation);
-    }
-
-    _addInputHandler() {
-        let submitButton = App.SUBMIT_BUTTON;
-
-        submitButton.addEventListener('OnClick', this._changeWeatherOnUserInputHandler)
-    }
-
-    _changeWeatherOnUserInputHandler() {
-        let userRequestedCity = INPUT_FIELD.innerText;
-
-        weatherAPI.getCurrentWeather({ city: userRequestedCity })
-            .then(receivedWeather => this.weatherPresentation.changeWeather(receivedWeather))
-            .catch(error => console.log(error));
+        let weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
+        let cityInputForm = new CityInputForm(weatherPresentation);
     }
 
     async _checkWeather() {
