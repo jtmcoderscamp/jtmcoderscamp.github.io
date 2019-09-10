@@ -7,18 +7,12 @@ export default class App {
         return document.querySelector('.weather-presentation-container');
     }
 
-    //metoda statyczna do pobrania przycisku odpowiedzialnego za pobranie pogody
-    static get SUBMIT_BUTTON(){
-        return document.querySelector(
-            '.search-btn'
-        )
+    static get SUBMIT_BUTTON() {
+        return document.querySelector('.search-btn')
     }
 
     static get INPUT_FIELD() {
-        return document.querySelector(
-            // TODO:: podpiąć jakoś formularz
-            '.search-text'
-        );
+        return document.querySelector('.search-text');
     }
 
     async start() {
@@ -37,41 +31,26 @@ export default class App {
 
     _onDocumentReady(weather) {
         this.weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
-        
 
         this._addInputHandler(weatherPresentation);
     }
 
-    _addInputHandler(weatherPresentation) {
-        // TODO:: ogarnąć jakoś pobieranie miasta z tego co zostało wpisane
-        // TODO:: a potem zaktualizować pogodę przekazując aktualną pogodę
-        // TODO:: (obiekt typu Weather) do weatherPresentation, np.:
-        
-        // let weather = {};
-        // weatherPresentation.changeWeather(weather);
+    _addInputHandler() {
         let submitButton = App.SUBMIT_BUTTON;
 
-        submitButton.addEventListener('OnClick',this._changeWeatherOnUserInputHandler)
-        console.log('Added event handler');
-        
+        submitButton.addEventListener('OnClick', this._changeWeatherOnUserInputHandler)
     }
 
-    _changeWeatherOnUserInputHandler(event){
+    _changeWeatherOnUserInputHandler() {
         let userRequestedCity = INPUT_FIELD.innerText;
-        
-        weatherAPI.getCurrentWeather({
-            city: userRequestedCity
-        }).then((receivedWeather) =>{
-            this.weatherPresentation.changeWeather(receivedWeather)
-        }).catch((error) => {
-            // good practic
-            console.log(error)
-        })
 
+        weatherAPI.getCurrentWeather({ city: userRequestedCity })
+            .then(receivedWeather => this.weatherPresentation.changeWeather(receivedWeather))
+            .catch(error => console.log(error));
     }
 
     async _checkWeather() {
-        const weatherAPI = new WeatherSource('http://api.openweathermap.org/data/2.5/','953349aaa2569f9cd4821f8c2ffda23a');
+        const weatherAPI = new WeatherSource('http://api.openweathermap.org/data/2.5/', '953349aaa2569f9cd4821f8c2ffda23a');
         const location = await this._checkLocation();
 
         return weatherAPI.getCurrentWeather(location);
