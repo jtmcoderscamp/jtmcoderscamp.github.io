@@ -30,7 +30,7 @@ export default class App {
     async _checkWeather() {
         const weatherAPI = new WeatherSource('http://api.openweathermap.org/data/2.5/', '953349aaa2569f9cd4821f8c2ffda23a');
         const location = await this._checkLocation();
-
+        
         return weatherAPI.getCurrentWeather(location);
     }
 

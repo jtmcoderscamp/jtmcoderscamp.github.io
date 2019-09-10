@@ -65,7 +65,12 @@ class OpenWeatherMapApi {
     // obecnej pogodzie z otrzymanego obiektu API
     _constructCurrentWeatherObject(data) {
         let dataPrecipitationObject = this._getPrecipitationFromDataModel(data)
-        let dataLocation = new Location(data.coord.lat, data.coord.lon, data.name, data.sys.country ? data.sys.country : "None")
+        let dataLocation = new Location(
+            data.coord.lat, 
+            data.coord.lon, 
+            data.name, 
+            data.sys.country ? data.sys.country : "None"
+        )
         
         return new Weather(
             data.main.temp,
@@ -74,6 +79,7 @@ class OpenWeatherMapApi {
             dataPrecipitationObject.precipitation,
             data.wind.deg,
             data.wind.speed,
+            [],
             dataLocation
         )
     }
