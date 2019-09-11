@@ -14,6 +14,10 @@ export default class WeatherPresentation {
         parentNode.appendChild(this._node);
     }
 
+    static placeholderWeatherPresentation(parentNode){
+        return new WeatherPresentation(parentNode, null)
+    }
+
     /**
      * removes the display from DOM
      */
@@ -94,12 +98,18 @@ export default class WeatherPresentation {
         let weatherContainerNode = document.createElement("div");
 
         weatherContainerNode.classList.add("weather-container");
-        this._addCloudinessClass(weatherContainerNode);
-        this._addPrecipitationClasses(weatherContainerNode);
-        this._addSpecialWeatherClass(weatherContainerNode);
+        if(this._weather){
+            this._addCloudinessClass(weatherContainerNode);
+            this._addPrecipitationClasses(weatherContainerNode);
+            this._addSpecialWeatherClass(weatherContainerNode);
+        }
+        else{
+            weatherContainerNode.classList.add("placeholder");
+        }
 
         weatherContainerNode.appendChild(this._setUpWeatherIcon());
         weatherContainerNode.appendChild(this._setUpTemperatureDisplay());
+        weatherContainerNode.appendChild(this._setUpLocationDisplay());
 
         return weatherContainerNode;
     }
@@ -115,10 +125,32 @@ export default class WeatherPresentation {
         let temperatureNode = document.createElement("div");
         temperatureNode.classList.add("temperature");
 
-        let temperatureDisplay = document.createElement("h3");
-        temperatureDisplay.innerText = Math.floor(this._weather.temperature)+"°C";
+        let temperatureDisplay = document.createElement("span");
+        let temperatureText = "??";
+        if(this._weather){
+            temperatureText = Math.round(this._weather.temperature);
+        }
+        temperatureDisplay.innerText = temperatureText+"°C";
+
         temperatureNode.appendChild(temperatureDisplay);
 
         return temperatureNode;
+    }
+
+    _setUpLocationDisplay(){
+        let locationNode = document.createElement("div");
+        locationNode.classList.add("location");
+        if(this._weather && this._weather.location && this._weather.location.cityName){
+            let locationString = ""+this._weather.location.cityName;
+            if(this._weather.location.country){
+                locationString += ", "+this._weather.location.country;
+            }
+            let locationText = document.createElement("h2");
+            locationText.classList.add("location-text");
+            locationText.innerText = locationString;
+
+            locationNode.appendChild(locationText);
+        }
+        return locationNode;
     }
 }
