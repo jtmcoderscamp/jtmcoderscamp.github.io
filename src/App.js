@@ -1,3 +1,4 @@
+import "./userInterface/weather-presentation.css";
 import LocationSource from "./locationSource/LocationSource";
 import WeatherSource from "./weatherSource/WeatherSource";
 import WeatherPresentation from "./userInterface/WeatherPresentation";
