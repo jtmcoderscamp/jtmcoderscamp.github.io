@@ -1,14 +1,9 @@
 import Weather from '../model/Weather'
-
-//do własnego użytku udostępniam klucz api
-//API_KEY: 953349aaa2569f9cd4821f8c2ffda23a
-
-// przykładowa inicjalizacja obiektu:
-// var WeatherAPI = new OpenWeatherMapApi('http://api.openweathermap.org/data/2.5/','953349aaa2569f9cd4821f8c2ffda23a')
+import Location from '../model/Location'
 
 class OpenWeatherMapApi {
 
-    constructor(apiUrlAddress, apiKey) {
+    constructor(apiUrlAddress = 'http://api.openweathermap.org/data/2.5/', apiKey='953349aaa2569f9cd4821f8c2ffda23a') {
         this.API_URL_ADDRESS = apiUrlAddress
         this.API_KEY = apiKey
     }
@@ -16,17 +11,17 @@ class OpenWeatherMapApi {
     // metoda prywatna wyryfikująca parametry
     // i na ich podstawie tworzy tekst URL, który następnie
     // będzie umieszczany w polu adresu url metody `fetch`
-    _verify(params) {
+    _analizeParamethersAndConstructUrlAddress(params) {
         let constructUrl;
-
+        
         if (params && Object.keys(params).length >= 1) {
-            if (params.latitude && params.longitude) {
+            if (typeof params.latitude == 'number' && typeof params.longitude == 'number') {
                 constructUrl = `lat=${params.latitude}&lon=${params.longitude}`
 
-            } else if (params.city && params.country) {
+            } else if (typeof params.city == 'string' && typeof params.country == 'string') {
                 constructUrl = `q=${params.city},${params.country}`
 
-            } else if (params.city) {
+            } else if (typeof params.city == 'string') {
                 constructUrl = `q=${params.city}`
 
             } else {
@@ -69,15 +64,23 @@ class OpenWeatherMapApi {
     // metoda prywatna zwracająca potrzebne dane o 
     // obecnej pogodzie z otrzymanego obiektu API
     _constructCurrentWeatherObject(data) {
-        var dataPrecipitationObject = this._getPrecipitationFromDataModel(data)
-
+        let dataPrecipitationObject = this._getPrecipitationFromDataModel(data)
+        let dataLocation = new Location(
+            data.coord.lat, 
+            data.coord.lon, 
+            data.name, 
+            data.sys.country ? data.sys.country : "None"
+        )
+        
         return new Weather(
             data.main.temp,
             data.clouds.all,
             dataPrecipitationObject.precipitationType,
             dataPrecipitationObject.precipitation,
             data.wind.deg,
-            data.wind.speed
+            data.wind.speed,
+            [],
+            dataLocation
         )
     }
 
@@ -88,9 +91,9 @@ class OpenWeatherMapApi {
 
     // metoda prywatna odpowiadająca za główną mechanikę pobierania danych z Api
     async _getWeather(params, weatherType, dataContructorFunction) {
-        let constructUrl = this._verify(params)
+        let constructedUrl = this._analizeParamethersAndConstructUrlAddress(params)
 
-        let dataUnparsed = await fetch(this.API_URL_ADDRESS + weatherType + '?' + constructUrl)
+        let dataUnparsed = await fetch(this.API_URL_ADDRESS + weatherType + '?' + constructedUrl)
         if (dataUnparsed.ok) {
             let data = await dataUnparsed.json();
             return dataContructorFunction(data)
