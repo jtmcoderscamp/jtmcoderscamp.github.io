@@ -1,5 +1,5 @@
 # jtmcoderscamp.weatherbunny
-WEATHER BUNNY
+# WEATHER BUNNY
 
 Weather Bunny is a children-oriented web app for weather display.
 It was developed across three weeks for educational purposes and is unlikely to see significant further development.
@@ -16,7 +16,7 @@ Version 1.0.0 is the MVP form of the project. Current main features include:
  1.3.0: testing and assurance of compatibility with older browsers
  2.0.0: forecast display, text descriptions of weather, clothing recommendations
 
-PROJECT STRUCTURE:
+# Project structure:
 The repository consists of two main branches:
 1. master - the "production" branch from which the github pages demo of the application can be accessed
 2. develop - the development branch. This branch aggregates the pull requests from working branches
@@ -26,7 +26,7 @@ While Weather Bunny is an exclusively front-end application, it heavily relies o
  - bunny.svg
  - search.svg
 
-APPLICATION ARCHITECTURE:
+# Application architecture:
 The application contains very little in the way of controler, therefore it eschews the typical MVC architecture in favor of pushing task-oriented modules to the top of package structure, following the principles of screaming architecture. The folder structure of 1.0.0 version is as follows:
 
  - *src*
