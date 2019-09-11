@@ -3,7 +3,7 @@ import Location from '../model/Location'
 
 class OpenWeatherMapApi {
 
-    constructor(apiUrlAddress = 'http://api.openweathermap.org/data/2.5/', apiKey='953349aaa2569f9cd4821f8c2ffda23a') {
+    constructor(apiUrlAddress = 'https://api.openweathermap.org/data/2.5/', apiKey='953349aaa2569f9cd4821f8c2ffda23a') {
         this.API_URL_ADDRESS = apiUrlAddress
         this.API_KEY = apiKey
     }
