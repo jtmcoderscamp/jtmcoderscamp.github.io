@@ -9,9 +9,10 @@ export default class WeatherPresentation {
      */
     constructor(parentNode, weather) {
         this._weather = weather;
+        this._parentNode = parentNode;
 
         this._node = this._setUpWeatherContainer();
-        parentNode.appendChild(this._node);
+        this._parentNode.appendChild(this._node);
     }
 
     static placeholderWeatherPresentation(parentNode){
@@ -22,7 +23,7 @@ export default class WeatherPresentation {
      * removes the display from DOM
      */
     remove(){
-        this._node.remove;
+        this._node.remove();
     }
 
     /**
@@ -32,9 +33,9 @@ export default class WeatherPresentation {
     changeWeather(weather){
         this._weather = weather;
 
-        this._node.remove;
+        this._node.remove();
         this._node = this._setUpWeatherContainer();
-        parentNode.appendChild(this._node);
+        this._parentNode.appendChild(this._node);
     }
 
     _addCloudinessClass(node) {
