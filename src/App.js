@@ -1,3 +1,4 @@
+import "./userInterface/weather-presentation.css";
 import LocationSource from "./locationSource/LocationSource";
 import WeatherSource from "./weatherSource/WeatherSource";
 import WeatherPresentation from "./userInterface/WeatherPresentation";
@@ -28,7 +29,7 @@ export default class App {
     }
 
     async _checkWeather() {
-        const weatherAPI = new WeatherSource('http://api.openweathermap.org/data/2.5/', '953349aaa2569f9cd4821f8c2ffda23a');
+        const weatherAPI = new WeatherSource('https://api.openweathermap.org/data/2.5/', '953349aaa2569f9cd4821f8c2ffda23a');
         const location = await this._checkLocation();
         
         return weatherAPI.getCurrentWeather(location);
