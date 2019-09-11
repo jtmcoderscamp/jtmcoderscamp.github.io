@@ -39,8 +39,14 @@ export default class CityInputForm {
             .then(receivedWeather => {
                 this._weatherPresentation.changeWeather(receivedWeather)
             })
-            .catch(error => {
-                console.log(error);
+            .catch(response => {
+                switch (response.status) {
+                    case 404 || 400:
+                            alert("No city was found. Please try typing once again!")
+                        break;
+                    default:
+                        break;
+                }
             });
     }
 }

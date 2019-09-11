@@ -69,7 +69,7 @@ class OpenWeatherMapApi {
             data.coord.lat, 
             data.coord.lon, 
             data.name, 
-            data.sys.country ? data.sys.country : "None"
+            data.sys.country ? data.sys.country : undefined
         )
         
         return new Weather(
