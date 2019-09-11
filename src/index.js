@@ -1,3 +1,4 @@
-﻿// plik inicjalizacyjny aplikacji
+﻿import App from "./App";
 
-console.log("...");
+const app = new App();
+app.start();

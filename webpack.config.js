@@ -5,7 +5,7 @@ module.exports = {
 	watch: true,
 	mode: "development",
 	output: {
-		path: path.resolve(__dirname, "dist"),
+		path: path.resolve(__dirname, "docs"),
 		filename: "bundle.js"
 	},
 	module: {
@@ -23,6 +23,18 @@ module.exports = {
 						presets: ["@babel/preset-env"]
 					}
 				}
+			},
+            {
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[path][name].[ext]',
+							context: path.resolve(__dirname, "src/")
+						}
+					}
+				]
 			}
 		]
 	}
