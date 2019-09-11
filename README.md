@@ -29,14 +29,14 @@ While Weather Bunny is an exclusively front-end application, it heavily relies o
 APPLICATION ARCHITECTURE:
 The application contains very little in the way of controler, therefore it eschews the typical MVC architecture in favor of pushing task-oriented modules to the top of package structure, following the principles of screaming architecture. The folder structure of 1.0.0 version is as follows:
 
- - src
- - - assets/ (static assets, locally stored images and icons used by the application)
- - - - icons
- - - - img
- - - userInterface (weather data display and interaction with the user)
- - - locationSource (determining the location)
- - - weatherSource (acquisition of weather data)
- - - model (model classes)
+ - *src*
+    - *assets*  - (static assets, locally stored images and icons used by the application)
+      - *icons*
+      - *img*
+    - *userInterface* - (weather data display and interaction with the user)
+    - *locationSource* - (determining the location)
+    - *weatherSource* - (acquisition of weather data)
+    - *model* - (model classes)
 
 The /src folder directly contains two files
 index.js - application initializer
