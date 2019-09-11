@@ -9,22 +9,23 @@ export default class App {
         return document.querySelector('.weather-presentation-container');
     }
 
-    async start() {
-        const weather = await this._checkWeather();
-
-        this._addEventListenerOnDocumentReady(weather, this._onDocumentReady);
+    start() {
+        this._addEventListenerOnDocumentReady(this._onDocumentReady);
     }
 
-    _addEventListenerOnDocumentReady(weather, callback) {
+    _addEventListenerOnDocumentReady(callback) {
         if (document.readyState === "complete" || document.readyState === "interactive") {
-            setTimeout(callback(weather), 1);
+            setTimeout(callback.bind(this), 1);
         } else {
-            document.addEventListener("DOMContentLoaded", callback(weather));
+            document.addEventListener("DOMContentLoaded", callback.bind(this));
         }
     }
 
-    _onDocumentReady(weather) {
-        let weatherPresentation = new WeatherPresentation(App.WEATHER_CONTAINER, weather);
+    async _onDocumentReady() {
+        let weatherPresentation = WeatherPresentation.placeholderWeatherPresentation(App.WEATHER_CONTAINER);
+        let weather = await this._checkWeather();
+        weatherPresentation.changeWeather(weather);
+
         let cityInputForm = new CityInputForm(weatherPresentation);
     }
 

@@ -20,21 +20,46 @@ export default class LocationSource {
     }
 
     async checkLocation() {
-        try {
-            return await this._getGpsLocation();
-        } catch (e) {
-            return await this._getIPLocation();
-        }
+        let location = await this._getGpsLocation();
+
+        if (!location) location = await this._getIPLocation();
+
+        if (location) return location;
+        else throw new Error("Couldn't find location.");
     }
 
     async _getGpsLocation() {
+        let location;
+
+        try {
+            location = await this._getGpsLocationWithTimeout();
+        } catch(e) {
+            console.log("Couldn't find location using GPS, using IP instead...");
+        }
+
+        return location;
+    }
+
+    async _getIPLocation() {
+        let location;
+
+        try {
+            location = await this._getIPLocationWithTimeout();
+        } catch(e) {
+            console.log("Couldn't find location using IP.");
+        }
+
+        return location;
+    }
+
+    async _getGpsLocationWithTimeout() {
         return this._raceWithoutRejection([
             new GpsApiLocationSource().checkLocation(),
             this._timeout(LocationSource.GPS_TIMEOUT)
         ]);
     }
 
-    async _getIPLocation() {
+    async _getIPLocationWithTimeout() {
         return this._raceWithoutRejection([
             new IpBasedLocationSource().checkLocation(),
             ...this._mapToPromises(),
