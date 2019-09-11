@@ -263,11 +263,11 @@ export default class Weather{
         let result;
 
         switch(true){
-            case coverage < 10: result = Weather.CLOUDINESS.NONE; break;
-            case coverage >= 10: result = Weather.CLOUDINESS.LIGHT; break;
-            case coverage >= 40: result = Weather.CLOUDINESS.MODERATE; break;
-            case coverage >= 60: result = Weather.CLOUDINESS.HEAVY; break;
             case coverage >= 80: result = Weather.CLOUDINESS.FULL; break;
+            case coverage >= 60: result = Weather.CLOUDINESS.HEAVY; break;
+            case coverage >= 40: result = Weather.CLOUDINESS.MODERATE; break;
+            case coverage >= 10: result = Weather.CLOUDINESS.LIGHT; break;
+            case coverage < 10: result = Weather.CLOUDINESS.NONE; break;
         }
         
         return result;
@@ -284,11 +284,11 @@ export default class Weather{
         let result;
 
         switch(true){
-            case precipitationPerHour == 0: result = Weather.PRECIPITATION.NONE; break;
-            case precipitationPerHour < 2.5: result = Weather.PRECIPITATION.LIGHT; break;
-            case precipitationPerHour >= 2.5: result = Weather.PRECIPITATION.MODERATE; break;
-            case precipitationPerHour >= 10: result = Weather.PRECIPITATION.STRONG; break;
             case precipitationPerHour >= 40: result = Weather.PRECIPITATION.EXTREME; break;
+            case precipitationPerHour >= 10: result = Weather.PRECIPITATION.STRONG; break;
+            case precipitationPerHour >= 2.5: result = Weather.PRECIPITATION.MODERATE; break;
+            case precipitationPerHour > 0: result = Weather.PRECIPITATION.LIGHT; break;
+            case precipitationPerHour == 0: result = Weather.PRECIPITATION.NONE; break;
         }
 
         return result;
@@ -307,12 +307,12 @@ export default class Weather{
         let result = 0;
 
         switch(true){
-            case windSpeedMPS < 1.5: result = Weather.WIND.CALM; break;
-            case windSpeedMPS >= 1.5: result = Weather.WIND.LIGHT_BREEZE; break;
-            case windSpeedMPS >= 5.5: result = Weather.WIND.MODERATE_BREEZE; break;
-            case windSpeedMPS >= 10.8: result = Weather.WIND.STRONG_BREEZE; break;
-            case windSpeedMPS >= 13.9: result = Weather.WIND.GALE; break;
             case windSpeedMPS >= 20.8: result = Weather.WIND.STORM; break;
+            case windSpeedMPS >= 13.9: result = Weather.WIND.GALE; break;
+            case windSpeedMPS >= 10.8: result = Weather.WIND.STRONG_BREEZE; break;
+            case windSpeedMPS >= 5.5: result = Weather.WIND.MODERATE_BREEZE; break;
+            case windSpeedMPS >= 1.5: result = Weather.WIND.LIGHT_BREEZE; break;
+            case windSpeedMPS < 1.5: result = Weather.WIND.CALM; break;
         }
         return result;
     }
