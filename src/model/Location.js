@@ -10,7 +10,7 @@ export default class Location{
             throw new Error(`Invalid coordinates`);
         }
     }
-
+    // CODE_REVIEW dziwi mnie to, że ta funkcja jest statyczna skoro i tak przekazywane jest this.
     static validateCoordinates(coordinates){
         let result = 
                     coordinates
