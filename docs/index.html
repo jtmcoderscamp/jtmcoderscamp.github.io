@@ -50,3 +50,36 @@
 </body>
 
 </html>
+
+<!-- CODE_REVIEW -->
+<!-- NIe będę z podobnych powodów oceniał html co css. -->
+<!-- Wasza aplikacja tworzy całkiem zgrabny system. Uważam, że trochę za bardzo pomieszaliście -->
+<!-- paradygmaty. Wszystkie moduły są klasami, ale jednak niektóre proste typy można by zmienić w klasy -->
+<!-- i nie używać wszędzie switchów tylko polimorfizmu. Przykładowo zachmurzenie - jest realizowane jako -->
+<!-- taki prowizoryczny enum i w wielu miejscach w kodzie pojawiły się switche, gdzie case'ami są różne wartości -->
+<!-- przyjęte przez te enum. To jest według mnie zgodne z programowaniem proceduralnym. W stylu OO powinno -->
+<!-- się bardziej stworzyć klasę abstrakcyjną zachmurzenie, a każdy rodzaj zachmurzenia dziedziczył by po niej. -->
+<!-- Wówczas zamiast switchów wszędzie wystarczyłoby definiować odpowiednie metody w różny sposób -->
+<!-- w zależności od rodzaju zachmurzenia. -->
+<!-- Jednak mimo to kod jest ok. Julian powinieneś się postarać bardziej rozbijać kod na submetody/funkcje, bo -->
+<!-- masz trochę skłonności do spaghetti. -->
+<!-- Damian całkiem w porządku. -->
+<!-- Krzysztof uważam, że wymyślasz zbyt skomplikowane nazwy metod i też powinieneś się starać rozbijać kod na -->
+<!-- submetody/funkcje. Poza tym postaraj się dokładniej obsługiwać errory, bo rzadko to u ciebie widziałem. -->
+<!-- Irina nie wiem czy pisałaś coś z JS, ale mogę powiedzieć, że podoba mi się design, który stworzyłaś. -->
+
+<!-- Aplikacja jest bardzo ładna, wystarczająco funkcjonalna, nie wysypuje się i jest na pewno przejrzysta i logiczna. -->
+<!-- Responsywność troszeczkę leży. Komunikaty o błędach w postaci alertu to średnia opcja, chociaż lepsze to niz nic. -->
+<!-- Tylko obecny rodzaj pogody i temperatura to trochę mało mimo wszystko. -->
+<!-- Widać, że troszkę zabrakło wam czasu, więc na luzie, nie odejmuję wam za to dużo punktów. -->
+<!-- Opis na githubie bardzo ładny, prezentacja też była w porządku. -->
+
+<!-- Ocena końcowa:
+  Code quality: 9/10 (kod bywał trochę nieładny niekiedy)
+  Design quality: 9/10 (-1 jeden za responsywność)
+  Business quality: 10/10
+  Features quality: 9.5/10 (-1 za mało funkcji +0.5 za świetne poradzenie sobie z lokalizacją)
+  RAZEM: 37.5/40
+ -->
+ <!-- To jest ocena całego projektu. Możliwę, że część z was dostanie trochę mniej, ponieważ -->
+ <!-- oceniam też zaangożowanie w projekt. -->

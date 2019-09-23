@@ -53,6 +53,7 @@ export default class LocationSource {
     }
 
     async _getGpsLocationWithTimeout() {
+        // CODE_REVIEW Nie wiem czy tworzenie nowej klasy za każdym wywołaniem tej funkcji to najlepszy pomysł.
         return this._raceWithoutRejection([
             new GpsApiLocationSource().checkLocation(),
             this._timeout(LocationSource.GPS_TIMEOUT)
@@ -82,15 +83,16 @@ export default class LocationSource {
         });
     }
 
+    // CODE_REVIEW podoba mi się ta metoda :D
     _raceWithoutRejection(promises) {
         if (promises.length <= 1) {
+            // CODE_REVIEW całkiem dziwna treść błędu jak na taką funkcję xD
             return Promise.reject("IP based location failed to determine location");
         }
 
         let indexPromises = promises.map((p, index) => p.catch(() => {
             throw index;
         }));
-
         return Promise.race(indexPromises).catch(index => {
             promises.splice(index, 1);
 

@@ -81,6 +81,7 @@ export default class Weather{
                 this._temperature = temperature;
         }
         else{
+            // CODE_REVIEW Dałbym tutaj TypeError zamiast Error
             throw new Error("Invalid temperature value: "+temperature);
         }
     }
@@ -165,9 +166,11 @@ export default class Weather{
     set specialWeather(specialWeather){
         if(Array.isArray(specialWeather)){
             let keys = Object.keys(Weather.SPECIAL_WEATHER);
+            // CODE_REVIEW tutaj zdecydowanie for...of by się nadało. Tak samo .forEach().
             for(let i=0;i<specialWeather.length;i++){
                 let j = 0;
                 let legalValue = false;
+                // CODE_REVIEW Dlaczego nie pętla for albo for...of?
                 while(!legalValue && j<keys.length){
                     legalValue = Weather.SPECIAL_WEATHER[keys[j]]===specialWeather[i];
                     j++;
@@ -193,6 +196,7 @@ export default class Weather{
     /**
      * Static constant: cloudiness levels
      */
+    // CODE_REVIEW Podobają mi się te improwizowane enumy.
     static get CLOUDINESS(){
         return {
             NONE: 0,
@@ -261,7 +265,15 @@ export default class Weather{
         }
 
         let result;
-
+        // CODE_REVIEW Dobre użycie switch(true). Chociaż dla porównania ifami:
+        // if(coverage >= 80) result = Weather.CLOUDINESS.FULL;
+        // else if(coverage >= 60) result = Weather.CLOUDINESS.HEAVY;
+        // else if(coverage >= 40) result = Weather.CLOUDINESS.MODERATE;
+        // else if(coverage >= 10) result = Weather.CLOUDINESS.LIGHT;
+        // else result = Weather.CLOUDINESS.NONE;
+        // Można też wyciągnąć te stałe:
+        // const { FULL, HEAVY, MODERATE, LIGHT, NONE } = Weather.CLOUDINESS;
+        
         switch(true){
             case coverage >= 80: result = Weather.CLOUDINESS.FULL; break;
             case coverage >= 60: result = Weather.CLOUDINESS.HEAVY; break;

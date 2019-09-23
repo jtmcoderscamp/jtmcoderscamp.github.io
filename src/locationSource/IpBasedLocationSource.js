@@ -1,15 +1,22 @@
+// CODE_REVIEW Ta paczka w package.json jest zainstolwana jako dev-dependency.
+// Jest używana w kodzie, więc ewidentnie powinna być zwykłą dependency.
 const resolvePath = require("object-resolve-path");
 
+// CODE_REVIEW Dokumentowanie kodu pełna profeska :D.
 export default class IpBasedLocationSource {
     /**
      * The constructor defining the API this object connect to for coordinates.
      * @param {String} apiUrl url of API to be queried for location, along with any necessary path variables
-     * @param {String} latitudeFieldPath path to the latitude field in JSON answer (if the aswer is {position:{lat: 0, lon: 0}}), the path would be position.lat)
-     * @param {String} longitudeFieldPath path to the longitude field in JSON answer (if the aswer is {position:{lat: 0, lon: 0}}), the path would be position.lon)
+     * @param {String} latitudeFieldPath path to the latitude field in JSON answer (if the answer is {position:{lat: 0, lon: 0}}), the path would be position.lat)
+     * @param {String} longitudeFieldPath path to the longitude field in JSON answer (if the answer is {position:{lat: 0, lon: 0}}), the path would be position.lon)
      * @param {String} locationFieldSeparator the separator to be used to split the latitude and longitude if they come as the same field (for example: {coordinates: "0.0, 10.11"} would require a ", " separator) 
      */
+    // CODE_REVIEW chociaż mógłbyś czasem wcisnąć enter ;P
     constructor(apiUrl = "https://json.geoiplookup.io/", latitudeFieldPath = "latitude", longitudeFieldPath = "longitude", locationFieldSeparator = null) {
         this._apiUrl = apiUrl;
+        // CODE_REVIEW Jeśli chcesz konieczie sprawdzać typy parametrów to najlepiej
+        // jest stworzyć setter i getter na jakąś właściwość lub po prostu
+        // wyabstrachować sprawdzanie do oddzielnej metody i nie komplikować konstruktora
         if (latitudeFieldPath === longitudeFieldPath && typeof latitudeFieldPath === "string" && locationFieldSeparator) {
             this._coordinatesFieldMode = "singleField";
             this._locationFieldPath = longitudeFieldPath;
@@ -29,6 +36,7 @@ export default class IpBasedLocationSource {
      * The main function querying the API based on configuration provided in constructor
      * @returns coordinates in {latitude, longitude} format
     */
+    // CODE_REVIEW ta metoda zdecydowanie nadaje się na rozbicie kodu na wiele metod
     async checkLocation() {
         let response = {};
         
@@ -47,6 +55,9 @@ export default class IpBasedLocationSource {
         let coordinates = {};
 
         if (this._coordinatesFieldMode === "singleField") {
+            // CODE_REVIEW zdecydowanie dziwi mnie użycie tutej tej paczki.
+            // jsonRespone powinien być plain object i jsonResponse[this._locationFieldPath] 
+            // powinno działać, nie działało? Julian jak to przeczytasz to się odezwij.
             let location = resolvePath(jsonResponse, this._locationFieldPath);
             let coordinatesArray = location.split(this._locationFieldSeparator);
             if (coordinatesArray.length === 2) {
